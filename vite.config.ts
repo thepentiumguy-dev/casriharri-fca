@@ -7,7 +7,7 @@ export default defineConfig(({ mode }) => {
     return {
       // -----------------------------------------------------------------------
       // 👇 THIS IS THE NEW LINE. REPLACE 'YOUR-REPO-NAME' WITH YOUR ACTUAL REPO NAME
-      base: '/YOUR-REPO-NAME/', 
+      base: 'casriharri-fca', 
       // -----------------------------------------------------------------------
       
       server: {
