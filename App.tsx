@@ -15,7 +15,7 @@ const MagneticButton = ({ children, className, onClick }: { children?: React.Rea
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   
-  const springX = useSpring(x, { stiffness: 150, damping: 15 });
+  const springX = useSpring(x,6 { stiffness: 150, damping: 15 });
   const springY = useSpring(y, { stiffness: 150, damping: 15 });
 
   const handleMouseMove = (e: React.MouseEvent) => {
@@ -331,11 +331,11 @@ const App: React.FC = () => {
                     </motion.div>
 
                     {/* Main Massive Name Typography with Synchronized Glow */}
-                    <div className="relative mb-6 group">
+                    <div className="relative mb-6 group w-fit mx-auto">
                         {/* 1. Behind Glow Layer */}
                         <motion.h1 
                             variants={{ hidden: { opacity: 0, scale: 0.9 }, visible: { opacity: 0.9, scale: 1 } }}
-                            className="absolute inset-0 font-heading font-black text-6xl sm:text-7xl md:text-9xl leading-[0.9] tracking-tighter select-none pointer-events-none blur-3xl z-0 transform-gpu"
+                            className="absolute inset-0 font-heading font-black text-[11vw] sm:text-7xl md:text-9xl leading-[0.9] tracking-tighter select-none pointer-events-none blur-3xl z-0 transform-gpu whitespace-nowrap"
                             animate={{ color: textGlowColors }}
                             transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
                         >
@@ -345,7 +345,7 @@ const App: React.FC = () => {
                         {/* 2. Middle Layer: Sharp Text */}
                         <motion.h1 
                             variants={{ hidden: { opacity: 0, scale: 0.9 }, visible: { opacity: 1, scale: 1 } }}
-                            className="relative font-heading font-black text-6xl sm:text-7xl md:text-9xl leading-[0.9] tracking-tighter z-10"
+                            className="relative font-heading font-black text-[11vw] sm:text-7xl md:text-9xl leading-[0.9] tracking-tighter z-10 whitespace-nowrap"
                         >
                              <span className="block text-transparent bg-clip-text bg-gradient-to-br from-gray-900 via-gray-700 to-gray-900 dark:from-white dark:via-gray-200 dark:to-white drop-shadow-xl">
                                 CA SRIHARRI
@@ -355,9 +355,9 @@ const App: React.FC = () => {
                         {/* Decorative 'FCA' Badge */}
                         <motion.div 
                             variants={{ hidden: { opacity: 0, x: -20 }, visible: { opacity: 1, x: 0 } }}
-                            className="static md:absolute md:-right-8 md:top-2 mt-4 md:mt-0 inline-flex z-20"
+                            className="absolute -right-4 -top-3 md:-right-8 md:top-2 rotate-12 z-20"
                         >
-                            <span className="px-3 py-1 bg-gradient-to-r from-primary-600 to-purple-600 text-white text-xs md:text-sm font-bold rounded-lg shadow-lg rotate-3 md:rotate-12 border border-white/20">
+                            <span className="px-2 py-0.5 md:px-3 md:py-1 bg-gradient-to-r from-primary-600 to-purple-600 text-white text-[10px] md:text-sm font-bold rounded-lg shadow-lg border border-white/20">
                                 FCA
                             </span>
                         </motion.div>
