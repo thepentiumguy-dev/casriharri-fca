@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, useSpring, useVelocity, useMotionValue, useMotionTemplate } from 'framer-motion';
 import { Mail, Phone, Building2, Linkedin, Github, Instagram, ArrowDown, ExternalLink, Sparkles, PieChart, Zap, Binary, Terminal, LineChart, Coins, Database, ScanFace, Activity, Wifi, Cpu } from 'lucide-react';
 import ThemeToggle from './components/ThemeToggle';
+import ProductsDropdown from './components/ProductsDropdown';
 import Header from './components/Header';
 import ProjectCard from './components/ProjectCard';
 import BotCompanion from './components/BotCompanion';
@@ -255,7 +256,10 @@ const App: React.FC = () => {
   return (
     <div className="min-h-screen relative overflow-x-hidden transition-colors duration-700 font-sans selection:bg-primary-500/30">
       <Header />
-      <ThemeToggle />
+      <div className="flex items-center">
+        <ProductsDropdown />
+        <ThemeToggle />
+      </div>
       <BotCompanion />
       <BackgroundDecorations />
 
