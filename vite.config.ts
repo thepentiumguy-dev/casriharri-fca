@@ -5,6 +5,11 @@ import react from '@vitejs/plugin-react';
 export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, '.', '');
     return {
+      // -----------------------------------------------------------------------
+      // 👇 THIS IS THE NEW LINE. REPLACE 'YOUR-REPO-NAME' WITH YOUR ACTUAL REPO NAME
+      base: '/YOUR-REPO-NAME/', 
+      // -----------------------------------------------------------------------
+      
       server: {
         port: 3000,
         host: '0.0.0.0',
