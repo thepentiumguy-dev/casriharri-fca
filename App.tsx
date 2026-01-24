@@ -7,6 +7,7 @@ import Header from './components/Header';
 import ProjectCard from './components/ProjectCard';
 import BotCompanion from './components/BotCompanion';
 import { PERSONAL_INFO, PROJECTS, CONTACT_INFO, SOCIAL_LINKS } from './constants';
+import { smoothScrollTo } from './utils';
 
 // --- Magnetic Button Component ---
 const MagneticButton = ({ children, className, onClick }: { children?: React.ReactNode, className?: string, onClick?: () => void }) => {
@@ -212,15 +213,6 @@ const BackgroundDecorations = () => {
 };
 
 const App: React.FC = () => {
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      const offset = 100;
-      const elementPosition = element.getBoundingClientRect().top + window.scrollY;
-      window.scrollTo({ top: elementPosition - offset, behavior: 'smooth' });
-    }
-  };
-
   // Hero Card Tilt Effect
   const heroRef = useRef<HTMLDivElement>(null);
   const hX = useMotionValue(0);
@@ -415,7 +407,7 @@ const App: React.FC = () => {
             className="flex flex-wrap justify-center gap-6 mt-16 relative z-10"
           >
             <MagneticButton 
-              onClick={() => scrollToSection('works')}
+              onClick={() => smoothScrollTo('works')}
               className="group relative px-8 py-4 bg-gray-900 dark:bg-white text-white dark:text-black rounded-2xl font-bold text-lg overflow-hidden shadow-2xl hover:shadow-primary-500/40 transition-all"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-primary-600 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -425,7 +417,7 @@ const App: React.FC = () => {
             </MagneticButton>
             
             <MagneticButton 
-              onClick={() => scrollToSection('contact')}
+              onClick={() => smoothScrollTo('contact')}
               className="px-8 py-4 bg-white/40 dark:bg-white/5 backdrop-blur-lg border border-white/40 dark:border-white/10 text-gray-900 dark:text-white rounded-2xl font-bold text-lg hover:bg-white/60 dark:hover:bg-white/10 transition-all shadow-lg hover:shadow-xl"
             >
               Reach Out
