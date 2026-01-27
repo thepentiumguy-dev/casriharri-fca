@@ -15,7 +15,7 @@ const MagneticButton = ({ children, className, onClick }: { children?: React.Rea
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   
-  const springX = useSpring(x, { stiffness: 150, damping: 15 });
+  const springX = useSpring(x,6 { stiffness: 150, damping: 15 });
   const springY = useSpring(y, { stiffness: 150, damping: 15 });
 
   const handleMouseMove = (e: React.MouseEvent) => {
