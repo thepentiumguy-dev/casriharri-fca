@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'framer-motion';
+import { smoothScrollTo } from '../utils';
 
 const Header: React.FC = () => {
   const { scrollY } = useScroll();
@@ -9,7 +10,7 @@ const Header: React.FC = () => {
 
   const navItems = useMemo(() => [
     { label: 'Profile', id: 'profile' },
-    { label: 'AI Tools', id: 'works' },
+    { label: 'Tools', id: 'works' }, // Changed from 'AI Tools'
     { label: 'Contact', id: 'contact' },
     { label: 'Social', id: 'social' },
   ], []);
@@ -47,15 +48,9 @@ const Header: React.FC = () => {
     return () => observer.disconnect();
   }, [navItems]);
 
-  const scrollTo = (id: string) => {
+  const handleNavClick = (id: string) => {
     setActiveTab(id);
-    const element = document.getElementById(id);
-    if (element) {
-      const isMobile = window.innerWidth < 768;
-      const offset = isMobile ? 80 : 120;
-      const elementPosition = element.getBoundingClientRect().top + window.scrollY;
-      window.scrollTo({ top: elementPosition - offset, behavior: 'smooth' });
-    }
+    smoothScrollTo(id);
   };
 
   return (
@@ -80,7 +75,7 @@ const Header: React.FC = () => {
             {navItems.map((item) => (
               <button
                 key={item.id}
-                onClick={() => scrollTo(item.id)}
+                onClick={() => handleNavClick(item.id)}
                 className={`
                   relative px-5 py-2.5 rounded-full text-sm font-semibold transition-colors z-10
                   ${activeTab === item.id 
@@ -93,7 +88,7 @@ const Header: React.FC = () => {
                   <motion.div
                     layoutId="activeTab"
                     className="absolute inset-0 bg-gray-900 dark:bg-white rounded-full -z-10"
-                    transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
                   />
                 )}
                 {item.label}

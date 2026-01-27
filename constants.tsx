@@ -42,7 +42,7 @@ export const PROJECTS: Project[] = [
       "Old vs New Regime Optimization",
       "Visual Tax Breakdown"
     ],
-    url: "https://hni-taxplanner.netlify.app",
+    url: "https://thepentiumguy-dev.github.io/hni-group-tax-planner/",
     icon: Calculator,
     color: "text-emerald-400"
   },

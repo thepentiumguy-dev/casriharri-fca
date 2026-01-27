@@ -7,6 +7,7 @@ import Header from './components/Header';
 import ProjectCard from './components/ProjectCard';
 import BotCompanion from './components/BotCompanion';
 import { PERSONAL_INFO, PROJECTS, CONTACT_INFO, SOCIAL_LINKS } from './constants';
+import { smoothScrollTo } from './utils';
 
 // --- Magnetic Button Component ---
 const MagneticButton = ({ children, className, onClick }: { children?: React.ReactNode, className?: string, onClick?: () => void }) => {
@@ -212,15 +213,6 @@ const BackgroundDecorations = () => {
 };
 
 const App: React.FC = () => {
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      const offset = 100;
-      const elementPosition = element.getBoundingClientRect().top + window.scrollY;
-      window.scrollTo({ top: elementPosition - offset, behavior: 'smooth' });
-    }
-  };
-
   // Hero Card Tilt Effect
   const heroRef = useRef<HTMLDivElement>(null);
   const hX = useMotionValue(0);
@@ -339,11 +331,11 @@ const App: React.FC = () => {
                     </motion.div>
 
                     {/* Main Massive Name Typography with Synchronized Glow */}
-                    <div className="relative mb-6 group">
+                    <div className="relative mb-6 group w-fit mx-auto">
                         {/* 1. Behind Glow Layer */}
                         <motion.h1 
                             variants={{ hidden: { opacity: 0, scale: 0.9 }, visible: { opacity: 0.9, scale: 1 } }}
-                            className="absolute inset-0 font-heading font-black text-6xl sm:text-7xl md:text-9xl leading-[0.9] tracking-tighter select-none pointer-events-none blur-3xl z-0 transform-gpu"
+                            className="absolute inset-0 font-heading font-black text-[11vw] sm:text-7xl md:text-9xl leading-[0.9] tracking-tighter select-none pointer-events-none blur-3xl z-0 transform-gpu whitespace-nowrap"
                             animate={{ color: textGlowColors }}
                             transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
                         >
@@ -353,7 +345,7 @@ const App: React.FC = () => {
                         {/* 2. Middle Layer: Sharp Text */}
                         <motion.h1 
                             variants={{ hidden: { opacity: 0, scale: 0.9 }, visible: { opacity: 1, scale: 1 } }}
-                            className="relative font-heading font-black text-6xl sm:text-7xl md:text-9xl leading-[0.9] tracking-tighter z-10"
+                            className="relative font-heading font-black text-[11vw] sm:text-7xl md:text-9xl leading-[0.9] tracking-tighter z-10 whitespace-nowrap"
                         >
                              <span className="block text-transparent bg-clip-text bg-gradient-to-br from-gray-900 via-gray-700 to-gray-900 dark:from-white dark:via-gray-200 dark:to-white drop-shadow-xl">
                                 CA SRIHARRI
@@ -363,9 +355,9 @@ const App: React.FC = () => {
                         {/* Decorative 'FCA' Badge */}
                         <motion.div 
                             variants={{ hidden: { opacity: 0, x: -20 }, visible: { opacity: 1, x: 0 } }}
-                            className="static md:absolute md:-right-8 md:top-2 mt-4 md:mt-0 inline-flex z-20"
+                            className="absolute -right-4 -top-3 md:-right-8 md:top-2 rotate-12 z-20"
                         >
-                            <span className="px-3 py-1 bg-gradient-to-r from-primary-600 to-purple-600 text-white text-xs md:text-sm font-bold rounded-lg shadow-lg rotate-3 md:rotate-12 border border-white/20">
+                            <span className="px-2 py-0.5 md:px-3 md:py-1 bg-gradient-to-r from-primary-600 to-purple-600 text-white text-[10px] md:text-sm font-bold rounded-lg shadow-lg border border-white/20">
                                 FCA
                             </span>
                         </motion.div>
@@ -415,7 +407,7 @@ const App: React.FC = () => {
             className="flex flex-wrap justify-center gap-6 mt-16 relative z-10"
           >
             <MagneticButton 
-              onClick={() => scrollToSection('works')}
+              onClick={() => smoothScrollTo('works')}
               className="group relative px-8 py-4 bg-gray-900 dark:bg-white text-white dark:text-black rounded-2xl font-bold text-lg overflow-hidden shadow-2xl hover:shadow-primary-500/40 transition-all"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-primary-600 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -425,7 +417,7 @@ const App: React.FC = () => {
             </MagneticButton>
             
             <MagneticButton 
-              onClick={() => scrollToSection('contact')}
+              onClick={() => smoothScrollTo('contact')}
               className="px-8 py-4 bg-white/40 dark:bg-white/5 backdrop-blur-lg border border-white/40 dark:border-white/10 text-gray-900 dark:text-white rounded-2xl font-bold text-lg hover:bg-white/60 dark:hover:bg-white/10 transition-all shadow-lg hover:shadow-xl"
             >
               Reach Out
