@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, useSpring, useVelocity, useMotionValue, useMotionTemplate } from 'framer-motion';
-import { Mail, Phone, Building2, Linkedin, Github, Instagram, ArrowDown, ExternalLink, Sparkles, PieChart, Zap, Binary, Terminal, LineChart, Coins, Database, ScanFace, Activity, Wifi, Cpu } from 'lucide-react';
+import { Mail, Phone, Building2, Linkedin, Github, Instagram, ArrowDown, ExternalLink, Sparkles, PieChart, Zap, Binary, Terminal, LineChart, Coins, Database, ScanFace, Activity, Wifi, Cpu, Code2 } from 'lucide-react';
 import ThemeToggle from './components/ThemeToggle';
 import ProductsDropdown from './components/ProductsDropdown';
 import Header from './components/Header';
@@ -98,6 +98,98 @@ const StatusBadge = () => (
         <span className="text-[9px] font-mono font-bold tracking-widest text-gray-500 dark:text-gray-400">NET.OPTIMAL</span>
     </div>
 );
+
+// --- New Glassmorphic Glitch Text Component ---
+const GlassyGlitchText = ({ text, className, highlight = false }: { text: string, className?: string, highlight?: boolean }) => {
+    const [glitch, setGlitch] = useState(false);
+
+    useEffect(() => {
+      const loop = () => {
+        // Random delay between 6s and 8s
+        const nextDelay = Math.random() * 2000 + 6000; 
+        setTimeout(() => {
+          setGlitch(true);
+          // Glitch duration 60ms - 100ms
+          setTimeout(() => {
+              setGlitch(false);
+              loop();
+          }, Math.random() * 40 + 60); 
+        }, nextDelay);
+      };
+      loop();
+    }, []);
+
+    const words = text.split(" ");
+
+    return (
+        <span className={`relative inline-block group ${className}`}>
+             <span className="sr-only">{text}</span>
+             {/* Render Text */}
+             <span 
+                className={`
+                    relative z-10 block transition-transform duration-75
+                    ${glitch ? 'skew-x-12 translate-x-1 scale-[1.01]' : ''}
+                `}
+             >
+                {words.map((word, wIdx) => (
+                    <span key={wIdx} className="inline-block whitespace-nowrap">
+                        {word.split("").map((char, cIdx) => {
+                            // Tech Accents on specific letters
+                            const isTechChar = ['A', 'F', 'I', 'E', 'B'].includes(char);
+                            return (
+                                <span key={cIdx} className="relative inline-block">
+                                    <span 
+                                        className={`
+                                            bg-clip-text text-transparent
+                                            ${highlight 
+                                                ? 'bg-gradient-to-b from-primary-400 via-purple-400 to-primary-600' 
+                                                : 'bg-gradient-to-b from-gray-800 via-gray-500 to-gray-900 dark:from-white dark:via-white/50 dark:to-white/80'
+                                            }
+                                        `}
+                                        style={{
+                                            // Glass/Etch Effect
+                                            WebkitTextStroke: highlight ? '1px rgba(168, 85, 247, 0.3)' : '1px rgba(128,128,128,0.2)',
+                                            filter: highlight ? 'drop-shadow(0 0 15px rgba(168, 85, 247, 0.4))' : 'drop-shadow(0 0 10px rgba(255,255,255,0.15))'
+                                        }}
+                                    >
+                                        {char}
+                                    </span>
+                                    
+                                    {/* Tech Visual Decorations */}
+                                    {isTechChar && !glitch && (
+                                        <>
+                                            <span className="absolute -top-[2px] right-0 w-[2px] h-[2px] bg-primary-500/50 rounded-full opacity-60" />
+                                            {char === 'F' && <span className="absolute bottom-1 left-0 w-full h-[1px] bg-current opacity-20" />}
+                                        </>
+                                    )}
+                                </span>
+                            );
+                        })}
+                        {wIdx < words.length - 1 && <span className="inline-block w-[0.2em]">&nbsp;</span>}
+                    </span>
+                ))}
+             </span>
+
+             {/* Glitch Layers (Red/Cyan Split) */}
+             {glitch && (
+                <>
+                    <span 
+                        className={`absolute top-0 left-0 z-0 text-red-500/40 mix-blend-screen animate-pulse translate-x-[3px] select-none pointer-events-none`}
+                        aria-hidden="true"
+                    >
+                        {text}
+                    </span>
+                    <span 
+                        className={`absolute top-0 left-0 z-0 text-cyan-500/40 mix-blend-screen animate-pulse -translate-x-[3px] select-none pointer-events-none`}
+                        aria-hidden="true"
+                    >
+                        {text}
+                    </span>
+                </>
+             )}
+        </span>
+    );
+};
 
 // --- Sticky Header with Physics ---
 const StickySectionHeader = ({ title, subtitle }: { title: string | React.ReactNode, subtitle?: string }) => {
@@ -255,15 +347,15 @@ const App: React.FC = () => {
       <BotCompanion />
       <BackgroundDecorations />
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-12 md:px-12 lg:py-20 flex flex-col gap-32">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-12 md:px-12 lg:py-20 flex flex-col gap-16">
         
-        {/* 1. HERO SECTION - REDESIGNED: MODERN MONOLITH */}
+        {/* 1. HERO SECTION - REDESIGNED TYPOGRAPHY & REDUCED SPACING */}
         <motion.section 
-          id="profile"
+          id="home"
           initial="hidden"
           animate="visible"
           variants={{ visible: { transition: { staggerChildren: 0.15 } } }}
-          className="flex flex-col justify-center items-center min-h-[85vh] relative pt-32 md:pt-0"
+          className="flex flex-col justify-center items-center relative pt-20 md:pt-10 pb-2"
         >
           {/* Tech Decor: Left Side Barcode */}
           <motion.div 
@@ -288,15 +380,13 @@ const App: React.FC = () => {
                 transformStyle: "preserve-3d" 
             }}
             variants={{ hidden: { y: 100, opacity: 0, scale: 0.9 }, visible: { y: 0, opacity: 1, scale: 1, transition: { type: "spring", stiffness: 60, damping: 20 } } }}
-            className="relative w-full max-w-5xl mx-auto group perspective-1000"
+            className="relative w-full max-w-6xl mx-auto group perspective-1000"
           >
              {/* Tech Decor: Floating Corner Brackets */}
              <div className="absolute -top-10 -left-10 w-20 h-20 border-t border-l border-gray-300 dark:border-white/20 rounded-tl-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none hidden md:block" />
              <div className="absolute -bottom-10 -right-10 w-20 h-20 border-b border-r border-gray-300 dark:border-white/20 rounded-br-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none hidden md:block" />
 
-             {/* 
-                Aurora Background Glow - OPTIMIZED FOR MOBILE
-             */}
+             {/* Aurora Background Glow */}
              <motion.div 
                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140%] h-[140%] -z-50 pointer-events-none rounded-full blur-[60px] md:blur-[100px] transform-gpu will-change-transform"
                animate={{ 
@@ -311,290 +401,19 @@ const App: React.FC = () => {
                }}
              />
 
-             {/* The Monolith Card */}
+             {/* The Monolith Card - TAGLINE VERSION */}
              <div className="relative bg-white/40 dark:bg-black/40 backdrop-blur-3xl rounded-[3rem] border border-white/40 dark:border-white/10 shadow-[0_40px_100px_-20px_rgba(0,0,0,0.2)] dark:shadow-black/50 overflow-hidden">
                 
                 {/* Noise Texture Overlay */}
                 <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')] bg-repeat" />
                 
-                <div className="relative z-10 px-8 py-16 md:px-16 md:py-24 flex flex-col items-center text-center">
+                <div className="relative z-10 px-4 py-12 md:px-12 md:py-16 flex flex-col items-center text-center">
                     
-                    {/* Top Tech Badge */}
-                    <motion.div 
-                        variants={{ hidden: { opacity: 0, y: -20 }, visible: { opacity: 1, y: 0 } }}
-                        className="mb-8 flex items-center gap-3 px-4 py-1.5 rounded-full bg-black/5 dark:bg-white/10 border border-black/5 dark:border-white/10 backdrop-blur-md"
+                    {/* Updated Tagline Typography with Glassy Glitch Tech */}
+                    <motion.div
+                        variants={{ hidden: { opacity: 0, scale: 0.9 }, visible: { opacity: 1, scale: 1 } }}
+                        className="flex flex-col items-center gap-2 md:gap-4 mb-6 w-full max-w-5xl"
                     >
-                        <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                        <span className="text-[10px] md:text-xs font-mono font-bold tracking-[0.2em] text-gray-600 dark:text-gray-300 uppercase">
-                            System Online
-                        </span>
-                    </motion.div>
-
-                    {/* Main Massive Name Typography with Synchronized Glow */}
-                    <div className="relative mb-6 group w-fit mx-auto">
-                        {/* 1. Behind Glow Layer */}
-                        <motion.h1 
-                            variants={{ hidden: { opacity: 0, scale: 0.9 }, visible: { opacity: 0.9, scale: 1 } }}
-                            className="absolute inset-0 font-heading font-black text-[11vw] sm:text-7xl md:text-9xl leading-[0.9] tracking-tighter select-none pointer-events-none blur-3xl z-0 transform-gpu whitespace-nowrap"
-                            animate={{ color: textGlowColors }}
-                            transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-                        >
-                            <span className="block">CA SRIHARRI</span>
-                        </motion.h1>
-
-                        {/* 2. Middle Layer: Sharp Text */}
-                        <motion.h1 
-                            variants={{ hidden: { opacity: 0, scale: 0.9 }, visible: { opacity: 1, scale: 1 } }}
-                            className="relative font-heading font-black text-[11vw] sm:text-7xl md:text-9xl leading-[0.9] tracking-tighter z-10 whitespace-nowrap"
-                        >
-                             <span className="block text-transparent bg-clip-text bg-gradient-to-br from-gray-900 via-gray-700 to-gray-900 dark:from-white dark:via-gray-200 dark:to-white drop-shadow-xl">
-                                CA SRIHARRI
-                             </span>
-                        </motion.h1>
-                        
-                        {/* Decorative 'FCA' Badge */}
-                        <motion.div 
-                            variants={{ hidden: { opacity: 0, x: -20 }, visible: { opacity: 1, x: 0 } }}
-                            className="absolute -right-4 -top-3 md:-right-8 md:top-2 rotate-12 z-20"
-                        >
-                            <span className="px-2 py-0.5 md:px-3 md:py-1 bg-gradient-to-r from-primary-600 to-purple-600 text-white text-[10px] md:text-sm font-bold rounded-lg shadow-lg border border-white/20">
-                                FCA
-                            </span>
-                        </motion.div>
-                    </div>
-
-                    {/* Split Line */}
-                    <motion.div 
-                        variants={{ hidden: { width: 0 }, visible: { width: "100px" } }}
-                        className="h-1 bg-gradient-to-r from-primary-500 to-purple-500 rounded-full mb-8"
-                    />
-
-                    {/* Roles / Subtitle */}
-                    <motion.div 
-                        variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }}
-                        className="flex flex-col md:flex-row items-center gap-3 md:gap-8 mb-12"
-                    >
-                        <div className="text-lg md:text-2xl font-medium text-gray-600 dark:text-gray-300 tracking-wide">
-                            FinTech Chartered Accountant
-                        </div>
-                        <span className="hidden md:block text-gray-300 dark:text-gray-600 text-2xl">/</span>
-                        <div className="flex items-center gap-2 text-lg md:text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary-600 to-purple-600 dark:from-primary-400 dark:to-purple-400">
-                           <Terminal size={24} className="text-primary-500" />
-                           AI App Developer
-                        </div>
-                    </motion.div>
-
-                    {/* Artistic Quote */}
-                    <motion.p 
-                        variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }}
-                        className="max-w-xl mx-auto text-gray-500 dark:text-gray-400 text-sm md:text-base font-medium leading-relaxed"
-                    >
-                        "Blending the precision of <span className="text-gray-900 dark:text-white font-bold">Audit</span> with the infinite scale of <span className="text-gray-900 dark:text-white font-bold">Automation</span>."
-                    </motion.p>
-
-                    {/* Tech Aesthetic Footer inside Card */}
-                    <div className="absolute bottom-4 left-6 right-6 flex justify-between items-end opacity-30 pointer-events-none hidden md:flex">
-                        <ScanFace size={32} strokeWidth={1} />
-                        <Barcode className="text-gray-500 dark:text-gray-400" />
-                    </div>
-                </div>
-             </div>
-          </motion.div>
-
-          {/* Magnetic Actions - Positioned below the monolith */}
-          <motion.div 
-            variants={{ hidden: { y: 20, opacity: 0 }, visible: { y: 0, opacity: 1 } }}
-            className="flex flex-wrap justify-center gap-6 mt-16 relative z-10"
-          >
-            <MagneticButton 
-              onClick={() => smoothScrollTo('works')}
-              className="group relative px-8 py-4 bg-gray-900 dark:bg-white text-white dark:text-black rounded-2xl font-bold text-lg overflow-hidden shadow-2xl hover:shadow-primary-500/40 transition-all"
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-primary-600 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <span className="relative z-10 flex items-center gap-3">
-                Explore AI Tools <ArrowDown size={20} className="group-hover:translate-y-1 transition-transform" />
-              </span>
-            </MagneticButton>
-            
-            <MagneticButton 
-              onClick={() => smoothScrollTo('contact')}
-              className="px-8 py-4 bg-white/40 dark:bg-white/5 backdrop-blur-lg border border-white/40 dark:border-white/10 text-gray-900 dark:text-white rounded-2xl font-bold text-lg hover:bg-white/60 dark:hover:bg-white/10 transition-all shadow-lg hover:shadow-xl"
-            >
-              Reach Out
-            </MagneticButton>
-          </motion.div>
-        </motion.section>
-
-        {/* 2. ABOUT SECTION */}
-        <section id="about" className="relative">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-12 items-start">
-            <div className="md:col-span-5 relative sticky top-36 z-10">
-              <motion.div 
-                whileHover={{ rotate: 2, scale: 1.02 }}
-                className="relative bg-white/70 dark:bg-surface-darkVariant/60 backdrop-blur-2xl border border-white/40 dark:border-white/10 p-10 rounded-[2.5rem] shadow-2xl overflow-hidden group"
-              >
-                 {/* Tech Decor: CPU Badge */}
-                 <div className="absolute top-6 right-6 opacity-30">
-                    <Cpu size={32} strokeWidth={1} />
-                 </div>
-
-                 <div className="flex items-center gap-5 mb-8">
-                   <div className="p-5 bg-primary-100/50 dark:bg-primary-900/30 rounded-2xl text-primary-600 dark:text-primary-300 shadow-inner">
-                     <Building2 size={36} />
-                   </div>
-                   <div>
-                     <h3 className="text-xs uppercase tracking-widest text-gray-500 dark:text-gray-400 font-bold mb-1">Base of Operations</h3>
-                     <p className="text-2xl font-heading font-bold dark:text-white">{PERSONAL_INFO.organization}</p>
-                   </div>
-                 </div>
-                 
-                 <div className="flex flex-wrap gap-3">
-                    {['Automator', 'FinTech', 'Developer'].map((tag) => (
-                      <span key={tag} className="px-4 py-2 rounded-full bg-white dark:bg-white/10 text-xs font-bold uppercase tracking-wider text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-white/5 shadow-sm">
-                        {tag}
-                      </span>
-                    ))}
-                 </div>
-                 
-                 <div className="mt-8 pt-6 border-t border-gray-100 dark:border-white/5">
-                    <TechTicker />
-                 </div>
-              </motion.div>
-            </div>
-            
-            <div className="md:col-span-7">
-              <StickySectionHeader 
-                title={
-                    <span>Decoding <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-purple-500">Finance</span> with Code</span>
-                } 
-                subtitle="About Me"
-              />
-              
-              <div className="space-y-8 text-xl text-gray-600 dark:text-gray-300 leading-relaxed font-medium px-4 relative">
-                {/* Tech Decor: Margin line */}
-                <div className="absolute left-0 top-0 bottom-0 w-[2px] bg-gradient-to-b from-gray-200 dark:from-gray-800 to-transparent"></div>
-
-                <p>Spreadsheets are great, but <span className="text-primary-600 dark:text-primary-400 font-bold bg-primary-100 dark:bg-primary-900/30 px-2 py-0.5 rounded-md">intelligent systems</span> are better.</p>
-                <p>{PERSONAL_INFO.bio}</p>
-                <p>I bridge the gap between regulatory complexity and software simplicity, building tools that don't just calculate—they think.</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* 3. WORKS SECTION */}
-        <section id="works" className="relative">
-          <div className="flex justify-between items-end mb-8">
-             <StickySectionHeader 
-                title={<span>AI <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-purple-500">Fintech</span> Tools</span>}
-                subtitle="Portfolio"
-             />
-             <div className="hidden md:block mb-8">
-                 <StatusBadge />
-             </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 px-2">
-            {PROJECTS.map((project) => (
-              <ProjectCard key={project.id} project={project} />
-            ))}
-          </div>
-        </section>
-
-        {/* 4. CONTACT SECTION */}
-        <section id="contact" className="grid grid-cols-1 lg:grid-cols-2 gap-12 pt-10">
-          <motion.div 
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ type: "spring", stiffness: 100 }}
-            viewport={{ once: true }}
-            className="bg-white/80 dark:bg-surface-darkVariant/60 backdrop-blur-2xl border border-white/50 dark:border-white/10 rounded-[3rem] p-10 md:p-14 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] relative overflow-hidden group"
-          >
-            <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-purple-500/10 to-primary-500/10 rounded-full blur-3xl -translate-y-1/3 translate-x-1/3 group-hover:scale-110 transition-transform duration-1000"></div>
-            
-            {/* Tech Decor: Signal Icon */}
-            <div className="absolute top-10 right-10">
-                <Wifi size={24} className="text-gray-400 opacity-30" />
-            </div>
-
-            <h2 className="font-heading text-4xl md:text-5xl font-bold dark:text-white mb-6 relative z-10">Let's Talk Numbers & Nodes</h2>
-            <p className="text-gray-500 dark:text-gray-400 mb-12 text-lg relative z-10 font-medium">
-              Got a complex financial problem that needs a coded solution? Or just want to geek out over tax laws?
-            </p>
-
-            <div className="space-y-6 relative z-10">
-              {[
-                { icon: Phone, label: "Call Line", value: CONTACT_INFO.phone, href: `tel:${CONTACT_INFO.phone}` },
-                { icon: Mail, label: "Digital Mail", value: CONTACT_INFO.email, href: `mailto:${CONTACT_INFO.email}` },
-                { icon: Building2, label: "HQ", value: CONTACT_INFO.organization, href: null }
-              ].map((item, idx) => (
-                <motion.a 
-                  key={idx} 
-                  href={item.href || '#'} 
-                  whileHover={{ scale: 1.02, x: 10 }}
-                  className={`flex items-center gap-6 p-5 rounded-3xl transition-all duration-300 ${item.href ? 'hover:bg-white/60 dark:hover:bg-white/5 hover:shadow-lg cursor-pointer' : ''}`}
-                >
-                  <div className="p-4 rounded-2xl bg-white dark:bg-white/5 shadow-md text-gray-900 dark:text-white border border-gray-100 dark:border-white/5">
-                    <item.icon size={26} strokeWidth={1.5} />
-                  </div>
-                  <div>
-                    <p className="text-xs font-bold text-primary-500 uppercase tracking-wider mb-1 opacity-80">{item.label}</p>
-                    <p className="text-xl font-heading font-bold dark:text-white">{item.value}</p>
-                  </div>
-                </motion.a>
-              ))}
-            </div>
-          </motion.div>
-
-          <div className="flex flex-col justify-between py-6">
-             <div id="social" className="space-y-8">
-               <StickySectionHeader title="Social Proof" subtitle="Connect" />
-               
-               <div className="flex flex-wrap gap-4">
-                 {SOCIAL_LINKS.map((link, i) => (
-                   <motion.a 
-                    key={i} 
-                    href={link.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    whileHover={{ y: -5, scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="group relative flex items-center gap-3 pl-6 pr-8 py-5 rounded-full bg-white/60 dark:bg-surface-darkVariant/60 border border-white/40 dark:border-white/10 hover:border-primary-500 dark:hover:border-primary-500 transition-colors shadow-lg overflow-hidden backdrop-blur-md"
-                   >
-                     {link.name === 'LinkedIn' && <Linkedin size={24} className="text-blue-600 dark:text-blue-400" />}
-                     {link.name === 'GitHub' && <Github size={24} className="text-gray-900 dark:text-white" />}
-                     {link.name === 'Instagram' && <Instagram size={24} className="text-pink-600 dark:text-pink-400" />}
-                     <span className="font-bold text-gray-700 dark:text-gray-200 text-lg">{link.name}</span>
-                     <ExternalLink size={16} className="opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
-                   </motion.a>
-                 ))}
-               </div>
-             </div>
-
-             <div className="mt-20 lg:mt-0 p-8 rounded-[2rem] bg-gray-50/50 dark:bg-white/5 border border-dashed border-gray-300 dark:border-white/10 backdrop-blur-sm relative overflow-hidden">
-                <div className="absolute top-0 right-0 p-4 opacity-10">
-                   <Activity size={48} />
-                </div>
-                <div className="flex flex-col gap-4 relative z-10">
-                    <p className="text-gray-500 dark:text-gray-500 text-sm font-mono">
-                      // Designed & Built with <br/>
-                      <span className="text-primary-600 dark:text-primary-400 font-bold">Finance + Technology Passion</span>
-                    </p>
-                    <div className="w-full h-px bg-gray-200 dark:bg-white/10"></div>
-                    <div className="flex justify-between items-end">
-                      <p className="text-gray-400 dark:text-gray-600 text-xs uppercase tracking-widest font-bold">
-                        © {new Date().getFullYear()} CA Sriharri
-                      </p>
-                      <Sparkles size={16} className="text-yellow-500 animate-pulse" />
-                    </div>
-                </div>
-             </div>
-          </div>
-        </section>
-
-      </main>
-    </div>
-  );
-};
-
-export default App;
+                        {/* Line 1 */}
+                        <div className="relative font-heading font-black text-3xl sm:text-5xl md:text-6xl tracking-tight leading-[1.2]">
+                           <Glass
