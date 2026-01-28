@@ -3,16 +3,16 @@ import { Moon, Sun } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const ThemeToggle: React.FC = () => {
-  const [isDark, setIsDark] = useState(true);
+  const [isDark, setIsDark] = useState(false);
 
   useEffect(() => {
-    // Check system preference or default to dark
-    if (localStorage.theme === 'light') {
-      setIsDark(false);
-      document.documentElement.classList.remove('dark');
-    } else {
+    // Check system preference or default to light
+    if (localStorage.theme === 'dark') {
       setIsDark(true);
       document.documentElement.classList.add('dark');
+    } else {
+      setIsDark(false);
+      document.documentElement.classList.remove('dark');
     }
   }, []);
 

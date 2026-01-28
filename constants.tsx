@@ -1,4 +1,10 @@
-import { Bot, Calculator, ShieldCheck } from 'lucide-react';
+import { 
+  Bot, Calculator, ShieldCheck, 
+  BrainCircuit, TrendingUp, AlertTriangle, 
+  Split, Scale, PieChart, 
+  Clock, Users, FileText, BarChart3,
+  CheckCircle2, Sparkles
+} from 'lucide-react';
 import { Project, ContactInfo } from './types';
 
 export const PERSONAL_INFO = {
@@ -25,7 +31,14 @@ export const PROJECTS: Project[] = [
       "Automated Ratio Analysis",
       "Red Flag Detection",
       "Upload PDF/Excel Support",
-      "Instant Insight Generation"
+      "Instant Insight Generation",
+      "Trend Analysis",
+      "Exportable Reports"
+    ],
+    highlights: [
+      { title: "AI Analysis", tag: "Core", icon: BrainCircuit },
+      { title: "Risk Detection", tag: "Safety", icon: AlertTriangle },
+      { title: "Smart Ratios", tag: "Auto", icon: BarChart3 }
     ],
     url: "https://finsightai-sh.netlify.app",
     icon: Bot,
@@ -40,7 +53,13 @@ export const PROJECTS: Project[] = [
       "Scenario Comparison",
       "Firm vs Partner Analysis",
       "Old vs New Regime Optimization",
-      "Visual Tax Breakdown"
+      "Visual Tax Breakdown",
+      "Deduction Suggestions"
+    ],
+    highlights: [
+      { title: "Scenarios", tag: "Plan", icon: Split },
+      { title: "Regime Opt.", tag: "Save", icon: Scale },
+      { title: "Visuals", tag: "View", icon: PieChart }
     ],
     url: "https://thepentiumguy-dev.github.io/hni-group-tax-planner/",
     icon: Calculator,
@@ -50,8 +69,19 @@ export const PROJECTS: Project[] = [
     id: 'audit-mate',
     name: "AuditMate Pro",
     shortDescription: "Compliance never looked this good.",
-    fullDescription: "A workflow automation tool for audit teams to track compliance status in real-time. (Concept/Demo)",
-    features: ["Real-time Tracking", "Team Collaboration", "Auto-generated Reports"],
+    fullDescription: "A workflow automation tool for audit teams to track compliance status in real-time. Designed to reduce manual follow-ups and ensure no deadline is missed. (Concept/Demo)",
+    features: [
+      "Real-time Tracking", 
+      "Team Collaboration", 
+      "Auto-generated Reports",
+      "Deadline Alerts",
+      "Client Portal"
+    ],
+    highlights: [
+      { title: "Live Track", tag: "Realtime", icon: Clock },
+      { title: "Team Sync", tag: "Collab", icon: Users },
+      { title: "Auto Docs", tag: "Gen", icon: FileText }
+    ],
     url: "#",
     icon: ShieldCheck,
     color: "text-blue-400"
