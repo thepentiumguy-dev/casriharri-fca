@@ -40,7 +40,7 @@ export const PROJECTS: Project[] = [
       { title: "Risk Detection", tag: "Safety", icon: AlertTriangle },
       { title: "Smart Ratios", tag: "Auto", icon: BarChart3 }
     ],
-    url: "https://thepentiumguy-dev.github.io/finsight-ai/",
+    url: "https://finsightai-sh.netlify.app",
     icon: Bot,
     color: "text-purple-400"
   },
