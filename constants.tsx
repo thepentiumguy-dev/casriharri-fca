@@ -27,7 +27,7 @@ export const PROJECTS: Project[] = [
       "Upload PDF/Excel Support",
       "Instant Insight Generation"
     ],
-    url: "https://finsightai-sh.netlify.app",
+    url: "https://thepentiumguy-dev.github.io/finsight-ai/",
     icon: Bot,
     color: "text-purple-400"
   },
